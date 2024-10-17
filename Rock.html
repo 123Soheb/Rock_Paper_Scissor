@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        h1{
+            background-color: black;
+            height:5rem;
+            text-align: center;
+            color:white;
+            line-height: 5rem;
+        
+        }
+        .choices{
+            display:flex;
+            margin-top: 10px;
+            justify-content: center;
+            gap: 2rem;
+
+        }
+        .choice:hover{
+            opacity: 0.5;
+            border: 1px solid green;
+        }
+
+        .choice{
+            width: 150px;
+            height: 150px;
+            text-align: center;
+            line-height: 150px;
+            border:2px solid rgb(196, 25, 25);
+            border-radius: 20%;
+            margin-top:5rem;
+            color:white;
+        }
+        .score-board{
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            margin-top: 3rem;
+            gap: 5rem;
+        }
+        #uer-score,#com-score{
+            font-size: 4rem;
+        }
+        .msg-container{
+            text-align: center;
+            margin-top: 5rem;
+
+        }
+        #msg{
+            
+            background-color: black;
+            color:white;
+            display: inline;
+            font-size: 5rem;
+            border-radius: 25px;
+            padding: 10px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <h1>Rock Paper scissor</h1>
+    <div class="choices">
+        <div class="choice" id="rock" style="background-color: blue;">rock hand</div>
+        <div class="choice" id="paper" style="background-color: chartreuse;">paper</div>
+        <div class="choice" id="scissor" style="background-color: aqua;" >scissor</div>
+    </div>
+
+    <div class="score-board">
+        <div class="score">
+            <p id="uer-score">0</p>
+            <p>You</p>
+        </div>
+        <div class="score">
+            <p id="com-score">0</p>
+            <p>Com</p>
+        </div>
+    </div>
+
+    <div class="msg-container">
+        <p id="msg">Play Your Move </p>
+    </div>
+    
+
+    <script>
+        let userScore=0;
+        let computerScore=0;
+
+        const userScorepara =document.querySelector("#uer-score");
+        const computerScorepara =document.querySelector("#com-score");
+        const choice=document.querySelectorAll(".choice");
+        const msg=document.querySelector("#msg");
+
+        choice.forEach((element)=>{
+            element.addEventListener("click", () =>{
+                const userchoice=element.getAttribute("id");
+                playgam(userchoice);
+                
+            })
+        });
+        
+
+       
+
+
+
+        const gencompnum= ()=>{
+            const option=["rock","scissor","paper"];
+            const randomin=Math.floor(Math.random()*3);
+            return option[randomin];
+           
+        };
+
+
+
+        const DrawMatch= ()=>{
+            console.log("Match is Draw");
+            msg.innerText="Match is Draw";
+            msg.style.backgroundColor="black";
+        };
+
+        const showwinner = (userwin ,userchoice,compval)=>{
+            if(userwin){
+                userScore++;
+                userScorepara.innerText=userScore;
+
+                console.log("User Win ");
+                msg.innerText=`You Win! your ${userchoice} beats ${compval}`;
+                msg.style.backgroundColor="red";
+            }else{
+                computerScore++;
+                computerScorepara.innerText=computerScore;
+
+                console.log("User lose");
+                msg.innerText=`You lose! ${compval} beats your ${userchoice}`;
+                msg.style.backgroundColor="green";
+            }
+        };
+
+        const playgam=(userchoice)=>{
+            console.log("User was clicked",userchoice );
+            const compval=gencompnum();
+            console.log("computer was clicked",compval );
+            if( userchoice === compval ){
+                DrawMatch();
+            }else{
+                let userwin=true;
+                if(userchoice === "rock"){
+
+                    userwin = compval === "paper"? false : true;
+                } 
+                else if(userchoice==="paper"){
+                    userwin=compval==="scissor"? false:true;
+                } 
+                else {
+
+                    userwin=compval==="rock"? false:true;
+                }
+                showwinner(userwin, userchoice, compval);
+            }
+        
+
+        }
+    </script>
+</body>
+</html>
